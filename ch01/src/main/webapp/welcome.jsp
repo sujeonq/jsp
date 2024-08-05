@@ -7,5 +7,8 @@
 </head>
 <body>
 	<h3>Welcome JSP!</h3>
+	<a href="./hello.html">hello</a>
+	<a href="./welcome.jsp">welcome</a>
+	<a href="./greeting.jsp">greeting</a>
 </body>
 </html>
