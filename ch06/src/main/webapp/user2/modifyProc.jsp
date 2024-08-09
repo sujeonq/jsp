@@ -6,8 +6,8 @@
 	// 데이터 수신
 	String uid   = request.getParameter("uid");
 	String name  = request.getParameter("name");
-	String hp    = request.getParameter("hp");
-	String age   = request.getParameter("age");
+	String birth = request.getParameter("birth");
+	String addr  = request.getParameter("addr");
 	
 	// 데이터베이스 처리
 	String host = "jdbc:mysql://127.0.0.1:3306/studydb";
@@ -22,12 +22,12 @@
 		Connection conn = DriverManager.getConnection(host, user, pass);
 		
 		// 2단계 - SQL실행 객체 생성
-		String sql = "insert into `user1` values (?,?,?,?)";
+		String sql = "update `user2` set `name`=?, `birth`=?, `addr`=? where `uid`=?";
 		PreparedStatement psmt = conn.prepareStatement(sql);
-		psmt.setString(1, uid);
-		psmt.setString(2, name);
-		psmt.setString(3, hp);
-		psmt.setString(4, age);
+		psmt.setString(1, name);
+		psmt.setString(2, birth);
+		psmt.setString(3, addr);
+		psmt.setString(4, uid);
 		
 		// 3단계 - SQL실행
 		psmt.executeUpdate();		
@@ -42,7 +42,7 @@
 	}
 	
 	// 목록 이동
-	response.sendRedirect("/ch06/user1/list.jsp");
+	response.sendRedirect("/ch06/user2/list.jsp");
 
 %>
 
