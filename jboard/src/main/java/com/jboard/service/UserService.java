@@ -1,4 +1,4 @@
-package com.jboard.service.user;
+package com.jboard.service;
 
 import java.util.List;
 import java.util.Properties;
@@ -12,13 +12,12 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.jboard.dao.user.UserDao;
-import com.jboard.dto.user.UserDto;
+import com.jboard.dao.UserDao;
+import com.jboard.dto.UserDto;
 
 public enum UserService {
 
-	INSTANCE;
-	
+	INSTANCE;	
 	private UserDao dao = UserDao.getInstance();
 	
 	public String sendEmailCode(String email) {
@@ -28,8 +27,8 @@ public enum UserService {
 		// 이메일 기본정보
 		String title = "jboard 인증번호 입니다.";
 		String content = "<h1>인증코드는 " + code + "입니다.</h1>";
-		String sender = "sujeonq@gmail.com";
-		String appPass = "jpeh ipid qtxm qzzp"; // Google 앱 비밀번호
+		String sender = "chhak0503@gmail.com";
+		String appPass = "lrdd yerd ubnr cipi"; // Google 앱 비밀번호
 		
 		// gmail SMTP 설정
 		Properties props = new Properties();
@@ -71,8 +70,8 @@ public enum UserService {
 	public void insertUser(UserDto dto) {
 		dao.insertUser(dto);
 	}
-	public UserDto selectUser(String uid) {
-		return dao.selectUser(uid);
+	public UserDto selectUser(String uid, String pass) {
+		return dao.selectUser(uid, pass);
 	}
 	public List<UserDto> selectUsers() {
 		return dao.selectUsers();
