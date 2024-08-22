@@ -1,7 +1,12 @@
 package com.jboard.service;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +20,7 @@ import com.jboard.dto.FileDto;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 public enum FileService {
@@ -27,7 +33,7 @@ public enum FileService {
 		dao.insertFile(dto);
 	}
 	
-	public FileDto selectFile(int fno) {
+	public FileDto selectFile(String fno) {
 		return dao.selectFile(fno);
 	}
 	
@@ -37,6 +43,9 @@ public enum FileService {
 	
 	public void updateFile(FileDto dto) {
 		dao.updateFile(dto);
+	}
+	public void updateFileDownloadCount(String fno) {
+		dao.updateFileDownloadCount(fno);
 	}
 	
 	public void deleteFile(int fno) {
@@ -88,8 +97,44 @@ public enum FileService {
 		return files;
 	}
 	
-	public void fileDownload() {
+	public void fileDownload(HttpServletRequest req, HttpServletResponse resp) {
 		
-	}
+		// 공유 참조값 가져오기
+		FileDto fileDto = (FileDto) req.getAttribute("fileDto");
+		
+		BufferedInputStream bis = null;
+		BufferedOutputStream bos = null;
+		
+		try {
+			// response 헤더정보 수정
+			resp.setContentType("application/octet-stream");
+			resp.setHeader("Content-Disposition", "attachment; filename="+URLEncoder.encode(fileDto.getoName(), "utf-8"));
+			resp.setHeader("Content-Transfer-Encoding", "binary");
+			resp.setHeader("Pragma", "no-cache");
+			resp.setHeader("Cache-Control", "private");
 	
+			// 파일 내용 스트림 처리
+			ServletContext ctx = req.getServletContext();
+			String path = ctx.getRealPath("/uploads");
+			File file = new File(path + File.separator + fileDto.getsName());
+			
+			bis = new BufferedInputStream(new FileInputStream(file));
+			bos = new BufferedOutputStream(resp.getOutputStream());
+			
+			bis.transferTo(bos);
+			bos.flush();
+			
+		}catch (Exception e) {
+			logger.error(e.getMessage());
+		}finally {
+			
+			try {
+				bos.close();
+				bis.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+	}
 }
