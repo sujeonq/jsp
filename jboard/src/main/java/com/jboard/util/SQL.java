@@ -46,6 +46,26 @@ public class SQL {
 												+ "`regip`=?,"
 												+ "`rdate`=NOW()";
 	
+	// comment
+	public static final String SELECT_COMMENT = "select * from `comment` where `no`=?";
+	
+	public static final String SELECT_COMMENTS = "SELECT a.*, b.nick from `comment` AS a "
+												+ "JOIN `user` AS b ON a.writer = b.uid "
+												+ "where `parent`=? "
+												+ "order by no";
+	
+	public static final String INSERT_COMMENT = "insert into `comment` set "
+												+ "`parent`=?,"
+												+ "`content`=?,"
+												+ "`writer`=?,"
+												+ "`regip`=?,"
+												+ "`rdate`=NOW()";
+	
+	public static final String UPDATE_COMMENT = "update `comment` set `content`=? where `no`=?";
+	
+	public static final String DELETE_COMMENT = "delete from `comment` where `no`=?";
+	
+	
 	// file
 	public static final String SELECT_FILE = "select * from file where fno=?";
 	public static final String INSERT_FILE = "insert into file set "

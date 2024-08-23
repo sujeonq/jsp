@@ -52,6 +52,7 @@ public class ListController extends HttpServlet {
 		req.setAttribute("lastPageNum", lastPageNum);
 		req.setAttribute("pageGroup", pageGroup);
 		req.setAttribute("pageStartNum", pageStartNum);
+		req.setAttribute("currentPage", currentPage);
 		
 		// Æ÷¿öµå
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/article/list.jsp");

@@ -27,8 +27,8 @@ public enum UserService {
 		// 이메일 기본정보
 		String title = "jboard 인증번호 입니다.";
 		String content = "<h1>인증코드는 " + code + "입니다.</h1>";
-		String sender = "chhak0503@gmail.com";
-		String appPass = "lrdd yerd ubnr cipi"; // Google 앱 비밀번호
+		String sender = "sujeonq@gmail.com";
+		String appPass = "jpeh ipid qtxm qzzp"; // Google 앱 비밀번호
 		
 		// gmail SMTP 설정
 		Properties props = new Properties();
